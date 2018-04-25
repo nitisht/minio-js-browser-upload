@@ -1,11 +1,19 @@
 var Minio = require('minio');
 
+// var client = new Minio.Client({
+//     endPoint: 'play.minio.io',
+//     port: 9000,
+//     secure: true,
+//     accessKey: 'Q3AM3UQ867SPQQA43P2F',
+//     secretKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
+// })
+
 var client = new Minio.Client({
-    endPoint: 'play.minio.io',
+    endPoint: 'localhost',
     port: 9000,
-    secure: true,
-    accessKey: 'Q3AM3UQ867SPQQA43P2F',
-    secretKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
+    secure: false,
+    accessKey: 'minio',
+    secretKey: 'minio123'
 })
 
 // express is a small HTTP server wrapper, but this works with any HTTP server
@@ -22,4 +30,4 @@ server.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
 
-server.listen(8080)
+server.listen(8081)
