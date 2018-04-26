@@ -11,21 +11,21 @@ var i = 0
    [$('#selector')[0].files].forEach(fileObj => {
      var file = fileObj[0]
      console.log('Start Time ', new Date().getTime())
-     for (var i = 0; i < 1000; i++) {
+     //for (var i = 0; i < 1000; i++) {
      // Retrieve a URL from our server.
      retrieveNewURL(i, url => {
        // Upload the file to the server.
        uploadFile(file, url, i, totalTime)
      })
-    }
+    //}
    })
  }
 
 var totalTime = function(){
-    completionAmount++;
-    if(completionAmount === 999){
+    //completionAmount++;
+    //if(completionAmount === 999){
       console.log('End Time ', new Date().getTime())
-    }
+    //}
 };
 
 
