@@ -1,37 +1,49 @@
 <input type="file" id="selector" multiple>
 <button onclick="upload()">Upload</button>
 
-<div id="status">No uploads</div>
-
 <script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
-
- function upload() {
+var i = 0
+var count = 1000
+var countUploads = 0
+var start = (new Date()).getTime()
+function upload() {
    [$('#selector')[0].files].forEach(fileObj => {
      var file = fileObj[0]
+     for (i = 0; i < count; i++) {
      // Retrieve a URL from our server.
-     retrieveNewURL(file, url => {
+     retrieveNewURL(i, url => {
        // Upload the file to the server.
-       uploadFile(file, url)
+       uploadFile(file, url, i, totalTime)
      })
+    }
    })
  }
 
+var totalTime = function(){
+  countUploads++
+  if(countUploads === count){
+    var end = (new Date()).getTime()
+    alert("Total time to upload " + i + " files : "+ (end - start) +" milliseconds")
+  }
+};
+
+
  // Request to our Node.js server for an upload URL.
- function retrieveNewURL(file, cb) {
-   $.get(`/presignedUrl?name=${file.name}`, (url) => {
+ function retrieveNewURL(name, cb) {
+   $.get(`/presignedUrl?name=${name}`, (url) => {
      cb(url)
    })
  }
 
  // Use XMLHttpRequest to upload the file to S3.
- function uploadFile(file, url) {
+ function uploadFile(file, url, name, totalTime) {
      var xhr = new XMLHttpRequest ()
      xhr.open('PUT', url, true)
      xhr.send(file)
      xhr.onload = () => {
        if (xhr.status == 200) {
-         $('#status').text(`Uploaded ${file.name}.`)
+         totalTime();
        }
      }
  }
